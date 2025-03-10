@@ -1,7 +1,13 @@
+import { Editor } from "@/components/Editor";
+
 export default function Home() {
   return (
-    <main>
-      <h1 className="text-2xl font-bold">Hello, world!</h1>
+    <main className="
+      min-h-dvh
+      flex flex-col items-center justify-center 
+      bg-white
+      ">
+      <Editor />
     </main>
   );
 }

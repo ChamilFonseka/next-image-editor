@@ -27,9 +27,12 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{ background: "linear-gradient(180deg,#f3f1ff 10.1%,#fff4ee 126.67%)" }}
       >
-        {children}
-        <Toaster richColors/>
+        <main className="min-h-dvh flex flex-col items-center justify-center p-8">
+          {children}
+        </main>
+        <Toaster richColors />
       </body>
     </html>
   );

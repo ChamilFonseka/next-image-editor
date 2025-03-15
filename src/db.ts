@@ -20,18 +20,16 @@ export const saveFileToDB = async (file: File) => {
     await db.images.put({ id: imageId, data: fileData, type: file.type });
 };
 
-export const getFilesFromDB = async () => {
+export const getFileFromDB = async () => {
     const images = await db.images.toArray();
     
     if(images.length === 0) return null;
 
     const image = images[0];
-    return {
-        id: image.id,
-        data: URL.createObjectURL(new Blob([image.data], { type: image.type })),
-    }
+
+    return new File([image.data], imageId, { type: image.type });
 };
 
-export const deleteFileFromDB = async (id: string) => {
-    await db.images.delete(id);
+export const deleteFileFromDB = async () => {
+    await db.images.delete(imageId);
 };

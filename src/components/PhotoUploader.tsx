@@ -5,16 +5,17 @@ import { Image as ImageIcon, MousePointerSquareDashed, Trash } from "lucide-reac
 import { useEffect, useState } from "react";
 import Dropzone, { FileRejection } from "react-dropzone";
 import { toast } from "sonner";
+import Image from "next/image";
 
 const PhotoUploader = () => {
 
     const [isDragOver, setIsDragOver] = useState<boolean>(false);
-    const [savedImages, setSavedImages] = useState<{ name: string; data: string; }[]>([]);
+    const [uploadedImage, setUploadedImage] = useState<{ id: string; data: string; } | null>();
 
     useEffect(() => {
         (async () => {
-            const images = await getFilesFromDB();
-            setSavedImages(images);
+            const image = await getFilesFromDB();
+            setUploadedImage(image);
         })();
     }, []);
 
@@ -36,7 +37,7 @@ const PhotoUploader = () => {
         await saveFileToDB(file);
 
         const images = await getFilesFromDB();
-        setSavedImages(images);
+        setUploadedImage(images);
 
         toast.success(`File ${file.name} uploaded successfully!`);
     };
@@ -44,7 +45,7 @@ const PhotoUploader = () => {
     const handleDelete = async (fileName: string) => {
         await deleteFileFromDB(fileName);
         const images = await getFilesFromDB();
-        setSavedImages(images);
+        setUploadedImage(images);
         toast.success(`File ${fileName} deleted.`);
     };
 
@@ -88,22 +89,21 @@ const PhotoUploader = () => {
                 )}
             </Dropzone>
 
-
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {savedImages.map((img, index) => (
-                    <div key={index} className="flex flex-col items-center">
-                        <img src={img.data} alt={img.name} className="size-96 object-cover rounded-lg shadow" />
-                        <p className="text-xs mt-1 text-zinc-700">{img.name}</p>
-                        <button
-                            className="mt-1 text-red-500 hover:text-red-700"
-                            onClick={() => handleDelete(img.name)}
-                        >
-                            <Trash className="w-5 h-5" />
-                        </button>
-                    </div>
-                ))}
-            </div>
-
+            {uploadedImage && (
+                <div className="mt-8 flex flex-col items-center">
+                    <Image src={uploadedImage.data} alt={uploadedImage.id}
+                        width={300}
+                        height={300}
+                        className="w-[300px] h-[300px] object-cover rounded-2xl shadow-2xl"
+                    />
+                    <button
+                        className="m-4 text-red-500 hover:text-red-700"
+                        onClick={() => handleDelete(uploadedImage.id)}
+                    >
+                        <Trash className="size-8" />
+                    </button>
+                </div>
+            )}
         </>
     );
 };

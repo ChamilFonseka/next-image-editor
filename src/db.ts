@@ -13,18 +13,23 @@ class ImageDB extends Dexie {
 }
 
 const db = new ImageDB();
+const imageId = 'imageId';
 
 export const saveFileToDB = async (file: File) => {
     const fileData = await file.arrayBuffer();
-    await db.images.put({ id: file.name, data: fileData, type: file.type });
+    await db.images.put({ id: imageId, data: fileData, type: file.type });
 };
 
 export const getFilesFromDB = async () => {
     const images = await db.images.toArray();
-    return images.map(img => ({
-        name: img.id,
-        data: URL.createObjectURL(new Blob([img.data], { type: img.type })),
-    }));
+    
+    if(images.length === 0) return null;
+
+    const image = images[0];
+    return {
+        id: image.id,
+        data: URL.createObjectURL(new Blob([image.data], { type: image.type })),
+    }
 };
 
 export const deleteFileFromDB = async (id: string) => {

@@ -1,7 +1,7 @@
 import Dexie from 'dexie';
 
 class ImageDB extends Dexie {
-    images: Dexie.Table<{ id: string; data: ArrayBuffer; type: string }, string>;
+    images: Dexie.Table<{ id: string; data: ArrayBuffer; type: string; }, string>;
 
     constructor() {
         super('ImageDB');
@@ -20,10 +20,10 @@ export const saveFileToDB = async (file: File) => {
     await db.images.put({ id: imageId, data: fileData, type: file.type });
 };
 
-export const getFileFromDB = async () => {
+export const getFileFromDB = async (): Promise<File | null> => {
     const images = await db.images.toArray();
-    
-    if(images.length === 0) return null;
+
+    if (images.length === 0) return null;
 
     const image = images[0];
 

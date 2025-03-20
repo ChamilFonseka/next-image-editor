@@ -3,20 +3,11 @@
 import { useEffect, useState } from "react";
 import NextImage from "next/image";
 import { deleteFileFromDB, getFileFromDB } from "@/db";
-import { ArrowBigLeft, Trash } from "lucide-react";
+import { ArrowBigLeft, ArrowBigRight, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import exifr from "exifr";
 import { Card, CardContent, CardHeader } from "./ui/card";
-
-type ImageData = {
-    width: number;
-    height: number;
-    type: string;
-    size: string;
-    dpiX: string;
-    dpiY: string;
-    ppi: string;
-};
+import { ImageData } from "@/types";
 
 function PhotoInfoDisplay() {
     const router = useRouter();
@@ -65,12 +56,18 @@ function PhotoInfoDisplay() {
 
     return (
         <div className='flex-1 rounded-3xl flex flex-col items-center  w-full h-full border-2 border-zinc-500'>
-            <div className="flex w-full">
+            <div className="flex w-full justify-between">
                 <button
                     className="m-4 text-sky-500 hover:text-rsky-700"
                     onClick={() => router.push('/')}
                 >
-                    <ArrowBigLeft className="size-8" />
+                    <ArrowBigLeft className="size-8" />Back
+                </button>
+                <button
+                    className="m-4 text-sky-500 hover:text-rsky-700"
+                    onClick={() => router.push('/edit')}
+                >
+                    <ArrowBigRight className="size-8" />Edit
                 </button>
             </div>
             {imageSrc && (
@@ -109,5 +106,3 @@ function PhotoInfoDisplay() {
     );
 }
 export default PhotoInfoDisplay;
-
-//test

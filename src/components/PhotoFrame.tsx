@@ -180,7 +180,7 @@ function PhotoFrame() {
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">8"x10" Photo Frame App</h1>
+      <h1 className="text-2xl font-bold mb-4">8x10 Photo Frame App</h1>
       
       <div className="mb-4">
         <input 
@@ -191,7 +191,7 @@ function PhotoFrame() {
         />
         
         <p className="text-sm text-gray-500 mb-4">
-          Upload a photo and crop it to an 8"x10" aspect ratio for printing. 
+          Upload a photo and crop it to an 8x10 aspect ratio for printing. 
           Minimum recommended size: {MIN_WIDTH}×{MIN_HEIGHT}px.
         </p>
       </div>
@@ -261,13 +261,13 @@ function PhotoFrame() {
             <div className="mt-4 p-4 bg-gray-100 rounded">
               <h3 className="font-medium mb-2">Image Information:</h3>
               <ul className="list-disc pl-5 text-sm">
-                <li>Aspect ratio: 8:10 (perfect for 8"×10" prints)</li>
+                <li>Aspect ratio: 8:10 (perfect for 8×10 prints)</li>
                 <li>Format: High-quality JPEG (100% quality)</li>
                 {canvasRef.current && (
                   <>
                     <li>Resolution: {canvasRef.current.width} × {canvasRef.current.height} pixels</li>
                     <li>
-                      Estimated print DPI: {calculateEstimatedDPI()} at 8"×10" size 
+                      Estimated print DPI: {calculateEstimatedDPI()} at 8×10 size 
                       ({getDpiQualityLevel(calculateEstimatedDPI())} quality)
                     </li>
                   </>
